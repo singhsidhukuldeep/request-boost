@@ -2,27 +2,13 @@
 
 A simple package for hitting multiple URLs and performing get requests in parallel.
 
-## Current Status
-
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/singhsidhukuldeep)
-[![GitHub pages status](https://img.shields.io/github/deployments/singhsidhukuldeep/request-boost/github-pages)](https://github.com/singhsidhukuldeep/request-boost/deployments/activity_log?environment=github-pages)
-[![GitHub up-time BOT](https://badgen.net/uptime-robot/month/ur967659-422c6e77bfb79bb6a47c642c)](https://github.com/singhsidhukuldeep/request-boost/deployments/activity_log?environment=github-pages)
-[![Commits](https://img.shields.io/github/last-commit/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/commits/master)
-[![DependaBot](https://api.dependabot.com/badges/status?host=github&repo=singhsidhukuldeep/request-boost)](https://dependabot.com/)
-
-[![Issues](https://img.shields.io/github/issues/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/issues)
-[![Total Commits](https://badgen.net/github/commits/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/commits/master)
-[![Contributors](https://badgen.net/github/contributors/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/graphs/contributors)
-[![Forks](https://badgen.net/github/forks/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/network/members)
-[![Stars](https://badgen.net/github/stars/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/stargazers)
-[![Watchers](https://badgen.net/github/watchers/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/watchers)
-[![Branches](https://badgen.net/github/branches/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/branches)
-
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python3.5+-1f425f.svg)](https://www.python.org/)
-[![made-with-Markdown](https://img.shields.io/badge/Made%20with-Markdown-1f425f.svg)](http://commonmark.org)
-[![repo- size](https://img.shields.io/github/repo-size/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost)
-[![Followers](https://img.shields.io/github/followers/singhsidhukuldeep?style=plastic&logo=github)](https://github.com/singhsidhukuldeep?tab=followers)
+<p align="center">
+<a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/pyversions/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
+<a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/v/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
+<a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/status/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
+<a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/format/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
+<a href="https://pypistats.org/packages/request-boost"><img src="https://img.shields.io/pypi/dm/request-boost"/></a>
+</p>
 
 ## Setup
 
