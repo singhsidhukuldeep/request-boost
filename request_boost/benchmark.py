@@ -13,7 +13,7 @@ from tqdm.auto import tqdm
 import plotly.express as px
 
 # Sample data
-number_of_sample_urls = 100
+number_of_sample_urls = 250
 urls = [f'https://postman-echo.com/get?random_data={test_no}' for test_no in range(number_of_sample_urls)]
 headers = [{'sample_header': test_no} for test_no in range(number_of_sample_urls)]
 
