@@ -21,7 +21,7 @@ classifiers = [
 
 setup(
     name='request-boost',
-    version='0.1',
+    version='0.2',
     description='A simple package for hitting multiple URLs and performing get requests in parallel.',
     long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.md').read()+'\n\nRead more at https://github.com/singhsidhukuldeep/request-boost',
     long_description_content_type="text/markdown",

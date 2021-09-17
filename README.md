@@ -1,5 +1,10 @@
 # request-boost
 
+<p align="center">
+  <a href="https://pypi.org/project/request-boost/">
+    <img src="https://github.com/singhsidhukuldeep/request-boost/raw/main/img/benchmark.png" width="1080" alt="Go to https://pypi.org/project/request-boost/">
+  </a>
+</p>
 
 <p align="center">
 A simple package for hitting multiple URLs and performing GET/POST requests in parallel.<br>
@@ -51,7 +56,8 @@ number_of_sample_urls = 100
 urls = [f'https://postman-echo.com/get?random_data={test_no}' for test_no in range(number_of_sample_urls)]
 post_urls = [f'https://postman-echo.com/post' for test_no in range(number_of_sample_urls)]
 headers = [{'sample_header': test_no} for test_no in range(number_of_sample_urls)]
-data = [{'sample_data': test_no} for test_no in range(number_of_sample_urls)]
+data = [{'sample_data': test_no} for test_no in range(number_of_sample_urls)] # Required for POST requests, 
+#For POST request data can be just list of empty dict but not NONE
 
 simple_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=None)
 header_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=headers)
@@ -98,3 +104,34 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 ## Say Thanks
 
  If this helped you in any way, it would be great if you could share it with others.
+
+## Steps for publishing to `pypi` [This is just for me, Maybe!]
+
+- `pip3 install setuptools twine`
+- Go to project folder
+- `python3 setup.py sdist`
+- `twine upload --repository-url https://upload.pypi.org/legacy/ dist/*`
+
+OR
+
+Go to your project folder and:
+```shell
+pip3 install setuptools twine
+
+python3 setup.py sdist
+twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+```
+
+## Current Status
+
+[![Issues](https://img.shields.io/github/issues/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/issues)
+[![Contributors](https://badgen.net/github/contributors/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/graphs/contributors)
+[![Forks](https://badgen.net/github/forks/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/network/members)
+[![Stars](https://badgen.net/github/stars/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/stargazers)
+[![Watchers](https://badgen.net/github/watchers/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/watchers)
+[![Branches](https://badgen.net/github/branches/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost/branches)
+
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python3.5+-1f425f.svg)](https://www.python.org/)
+[![repo- size](https://img.shields.io/github/repo-size/singhsidhukuldeep/request-boost)](https://github.com/singhsidhukuldeep/request-boost)
+[![Followers](https://img.shields.io/github/followers/singhsidhukuldeep?style=plastic&logo=github)](https://github.com/singhsidhukuldeep?tab=followers)
