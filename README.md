@@ -1,8 +1,8 @@
 # request-boost
 
-A simple package for hitting multiple URLs and performing get requests in parallel.
 
 <p align="center">
+A simple package for hitting multiple URLs and performing GET/POST requests in parallel.<br>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/pyversions/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/v/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/status/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
@@ -41,6 +41,23 @@ results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, hea
 print(results)
 ```
 
+```python
+from request_boost import boosted_requests
+
+# Config
+number_of_sample_urls = 100
+
+# Sample data
+urls = [f'https://postman-echo.com/get?random_data={test_no}' for test_no in range(number_of_sample_urls)]
+post_urls = [f'https://postman-echo.com/post' for test_no in range(number_of_sample_urls)]
+headers = [{'sample_header': test_no} for test_no in range(number_of_sample_urls)]
+data = [{'sample_data': test_no} for test_no in range(number_of_sample_urls)]
+
+simple_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=None)
+header_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=headers)
+post_results = boosted_requests(urls=post_urls, no_workers=16, max_tries=5, timeout=5, headers=headers, data=data)
+```
+
 ## Documentation
 
 ```
@@ -52,6 +69,7 @@ Get data from APIs in parallel by creating workers that process in the backgroun
     :param max_tries: Maximum number of tries before failing for a specific URL
     :param timeout: Waiting time per request
     :param headers: Headers if any for the URL requests
+    :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :return: List of response for each API (order is maintained)
 ```
 
