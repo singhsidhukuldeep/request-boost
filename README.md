@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-A simple package for hitting multiple URLs and performing GET/POST requests in parallel.<br>
+<b>A better requests and urllib package.</b></b><br> A simple package for hitting multiple URLs and performing GET/POST requests in parallel.<br>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/pyversions/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/v/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/status/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
