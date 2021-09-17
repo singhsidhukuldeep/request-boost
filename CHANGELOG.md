@@ -9,3 +9,7 @@ CHANGE LOG
 ------------------------
 - Fixed header issue
 - Added POST functionality
+
+0.3.1 (17/09/2021)
+------------------------
+- Added Verbose

@@ -12,7 +12,7 @@ from threading import Thread
 import json
 
 
-def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, data=None):
+def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, data=None, verbose=True):
     """
     Get data from APIs in parallel by creating workers that process in the background
     :param urls: list of URLS
@@ -21,25 +21,30 @@ def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, 
     :param timeout: Waiting time per request
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
+    :param verbose: Show progress [True or False]
     :return: List of response for each API (order is maintained)
     """
 
     class GetRequestWorker(Thread):
-        def __init__(self, request_queue, max_tries=3, timeout=10):
+        def __init__(self, request_queue, max_tries=3, timeout=10, verbose=True):
             """
             Workers that can pull data in the background
-            :param request_queue: queue of the URLs
+            :param request_queue: queue of the dict containing the URLs
             :param max_tries: Maximum number of tries before failing for a specific URL
             :param timeout: Waiting time per request
+            :param verbose: Show progress [True or False]
             """
             Thread.__init__(self)
             self.queue = request_queue
             self.results = {}
             self.max_tries = max_tries
             self.timeout = timeout
+            self.verbose = verbose
 
         def run(self):
             while True:
+                if self.verbose:
+                    print(f'\r>> {self.queue.qsize()} requests left', end='')
                 if self.queue.qsize() == 0:
                     break
                 else:
@@ -91,7 +96,7 @@ def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, 
     workers = []
 
     for _ in range(min(url_q.qsize(), no_workers)):
-        worker = GetRequestWorker(url_q, max_tries=3, timeout=10)
+        worker = GetRequestWorker(url_q, max_tries=max_tries, timeout=timeout, verbose=verbose)
         worker.start()
         workers.append(worker)
 
@@ -101,4 +106,6 @@ def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, 
     ret = {}
     for worker in workers:
         ret.update(worker.results)
+    if verbose:
+        print(f'\r>> DONE')
     return [ret[_] for _ in range(len(urls))]
