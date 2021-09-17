@@ -10,9 +10,10 @@ import queue
 from urllib import request, parse
 from threading import Thread
 import json
+from datetime import datetime
 
 
-def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, data=None, verbose=True):
+def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None, data=None, verbose=True):
     """
     Get data from APIs in parallel by creating workers that process in the background
     :param urls: list of URLS
@@ -24,9 +25,16 @@ def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, 
     :param verbose: Show progress [True or False]
     :return: List of response for each API (order is maintained)
     """
+    start = datetime.now()
+
+    def _printer(inp, end=''):
+        print(f'\r::{(datetime.now() - start).total_seconds():.2f} seconds::',
+              str(inp),
+              end=end
+              )
 
     class GetRequestWorker(Thread):
-        def __init__(self, request_queue, max_tries=3, timeout=10, verbose=True):
+        def __init__(self, request_queue, max_tries=5, timeout=10, verbose=True):
             """
             Workers that can pull data in the background
             :param request_queue: queue of the dict containing the URLs
@@ -44,7 +52,7 @@ def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, 
         def run(self):
             while True:
                 if self.verbose:
-                    print(f'\r>> {self.queue.qsize()} requests left', end='')
+                    _printer(f'>> {self.queue.qsize()} requests left', end='')
                 if self.queue.qsize() == 0:
                     break
                 else:
@@ -107,5 +115,5 @@ def boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, 
     for worker in workers:
         ret.update(worker.results)
     if verbose:
-        print(f'\r>> DONE')
+        _printer(f'>> DONE')
     return [ret[_] for _ in range(len(urls))]

@@ -13,3 +13,8 @@ CHANGE LOG
 0.3.1 (17/09/2021)
 ------------------------
 - Added Verbose
+
+0.4 (17/09/2021)
+------------------------
+- Added Verbose timing
+- Improved performance
