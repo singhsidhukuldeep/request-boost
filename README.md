@@ -1,11 +1,10 @@
-# request-boost 
-
 <p align="center">
+  
   <a href="https://pypi.org/project/request-boost/">
     <img src="https://github.com/singhsidhukuldeep/request-boost/raw/main/img/benchmark.png" width="1080" alt="Go to https://pypi.org/project/request-boost/">
   </a>
 </p>
-
+<h1 align="center">request-boost </h1>
 <p align="center">
 <b>A better requests and urllib package.</b></b><br> A simple package for hitting multiple URLs and performing GET/POST requests in parallel.<br>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/pyversions/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
