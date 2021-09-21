@@ -67,6 +67,12 @@ post_results = boosted_requests(urls=post_urls, no_workers=16, max_tries=5, time
 
 ## Documentation
 
+<p align="center">
+  <a href="https://github.com/singhsidhukuldeep/request-boost/raw/main/img/structure.jpg">
+    <img src="https://github.com/singhsidhukuldeep/request-boost/raw/main/img/structure.jpg" width="1080" alt="Go to https://github.com/singhsidhukuldeep/request-boost/raw/main/img/structure.jpg">
+  </a>
+</p>
+
 ```
 boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, data=None, verbose=True)
 
