@@ -77,7 +77,9 @@ def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None,
                     self.queue.put(content)
                     continue
                 if response.getcode() == 200:
-                    self.results[loc] = json.loads(response.read())
+                    data = response.read()
+                    encoding = response.info().get_content_charset("utf-8")
+                    self.results[loc] = json.loads(data.decode(encoding))
                     self.queue.task_done()
                 else:
                     content['retry'] += 1
