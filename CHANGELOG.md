@@ -18,3 +18,8 @@ CHANGE LOG
 ------------------------
 - Added Verbose timing
 - Improved performance
+
+0.5 (16/10/2021)
+------------------------
+- Added Encoding fix
+- Improved Readability
