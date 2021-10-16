@@ -13,7 +13,9 @@ import json
 from datetime import datetime
 
 
-def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None, data=None, verbose=True):
+def boosted_requests(
+    urls, no_workers=32, max_tries=5, timeout=10, headers=None, data=None, verbose=True
+):
     """
     Get data from APIs in parallel by creating workers that process in the background
     :param urls: list of URLS
@@ -27,11 +29,12 @@ def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None,
     """
     start = datetime.now()
 
-    def _printer(inp, end=''):
-        print(f'\r::{(datetime.now() - start).total_seconds():.2f} seconds::',
-              str(inp),
-              end=end
-              )
+    def _printer(inp, end=""):
+        print(
+            f"\r::{(datetime.now() - start).total_seconds():.2f} seconds::",
+            str(inp),
+            end=end,
+        )
 
     class GetRequestWorker(Thread):
         def __init__(self, request_queue, max_tries=5, timeout=10, verbose=True):
@@ -52,17 +55,19 @@ def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None,
         def run(self):
             while True:
                 if self.verbose:
-                    _printer(f'>> {self.queue.qsize()} requests left', end='')
+                    _printer(f">> {self.queue.qsize()} requests left", end="")
                 if self.queue.qsize() == 0:
                     break
                 else:
                     content = self.queue.get()
-                    url = content['url']
-                    header = content['header']
-                    num_tries = content['retry']
-                    data = content['data']
-                    loc = content['loc']
-                    assert num_tries < self.max_tries, f"Maximum number of attempts reached {self.max_tries} for {content}"
+                    url = content["url"]
+                    header = content["header"]
+                    num_tries = content["retry"]
+                    data = content["data"]
+                    loc = content["loc"]
+                    assert (
+                        num_tries < self.max_tries
+                    ), f"Maximum number of attempts reached {self.max_tries} for {content}"
                 try:
                     if data is not None:
                         data = parse.urlencode(data).encode()
@@ -73,7 +78,7 @@ def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None,
                         _request.add_header(k, v)
                     response = request.urlopen(_request, timeout=self.timeout)
                 except Exception as exp:
-                    content['retry'] += 1
+                    content["retry"] += 1
                     self.queue.put(content)
                     continue
                 if response.getcode() == 200:
@@ -82,7 +87,7 @@ def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None,
                     self.results[loc] = json.loads(data.decode(encoding))
                     self.queue.task_done()
                 else:
-                    content['retry'] += 1
+                    content["retry"] += 1
                     self.queue.put(content)
 
     if headers is None:
@@ -90,23 +95,31 @@ def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None,
     if data is None:
         data = [None for _ in range(len(urls))]
 
-    assert len(headers) == len(urls), 'Length of headers and urls need to be same OR headers needs to be None'
-    assert len(data) == len(urls), 'Length of data and urls need to be same OR data needs to be None (in case of GET)'
+    assert len(headers) == len(
+        urls
+    ), "Length of headers and urls need to be same OR headers needs to be None"
+    assert len(data) == len(
+        urls
+    ), "Length of data and urls need to be same OR data needs to be None (in case of GET)"
 
     url_q = queue.Queue()
     for i in range(len(urls)):
-        url_q.put({
-            'url': urls[i],
-            'retry': 0,
-            'header': headers[i],
-            'loc': i,
-            'data': data[i]
-        })
+        url_q.put(
+            {
+                "url": urls[i],
+                "retry": 0,
+                "header": headers[i],
+                "loc": i,
+                "data": data[i],
+            }
+        )
 
     workers = []
 
     for _ in range(min(url_q.qsize(), no_workers)):
-        worker = GetRequestWorker(url_q, max_tries=max_tries, timeout=timeout, verbose=verbose)
+        worker = GetRequestWorker(
+            url_q, max_tries=max_tries, timeout=timeout, verbose=verbose
+        )
         worker.start()
         workers.append(worker)
 
@@ -117,5 +130,5 @@ def boosted_requests(urls, no_workers=32, max_tries=5, timeout=10, headers=None,
     for worker in workers:
         ret.update(worker.results)
     if verbose:
-        _printer(f'>> DONE')
+        _printer(f">> DONE")
     return [ret[_] for _ in range(len(urls))]
