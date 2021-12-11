@@ -6,7 +6,7 @@ GitHub     : https://github.com/singhsidhukuldeep
 Description:
 """
 
-# !pip install request-boost tqdm plotly
+# !pip install request-boost tqdm plotly pandas
 from request_boost import boosted_requests
 from datetime import datetime as dt
 from tqdm.auto import tqdm
