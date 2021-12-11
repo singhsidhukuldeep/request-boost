@@ -6,15 +6,22 @@ GitHub     : https://github.com/singhsidhukuldeep
 Description:
 """
 
-import queue
-from urllib import request, parse
-from threading import Thread
 import json
+import queue
 from datetime import datetime
+from threading import Thread
+from urllib import parse, request
 
 
 def boosted_requests(
-    urls, no_workers=32, max_tries=5, timeout=10, headers=None, data=None, verbose=True
+    urls,
+    no_workers=32,
+    max_tries=5,
+    timeout=10,
+    headers=None,
+    data=None,
+    verbose=True,
+    parse_json=True,
 ):
     """
     Get data from APIs in parallel by creating workers that process in the background
@@ -25,6 +32,7 @@ def boosted_requests(
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :param verbose: Show progress [True or False]
+    :param parse_json: Parse response to json [True or False]
     :return: List of response for each API (order is maintained)
     """
     start = datetime.now()
@@ -37,13 +45,16 @@ def boosted_requests(
         )
 
     class GetRequestWorker(Thread):
-        def __init__(self, request_queue, max_tries=5, timeout=10, verbose=True):
+        def __init__(
+            self, request_queue, max_tries=5, timeout=10, verbose=True, parse_json=True
+        ):
             """
             Workers that can pull data in the background
             :param request_queue: queue of the dict containing the URLs
             :param max_tries: Maximum number of tries before failing for a specific URL
             :param timeout: Waiting time per request
             :param verbose: Show progress [True or False]
+            :param parse_json: Parse response to json [True or False]
             """
             Thread.__init__(self)
             self.queue = request_queue
@@ -51,6 +62,7 @@ def boosted_requests(
             self.max_tries = max_tries
             self.timeout = timeout
             self.verbose = verbose
+            self.parse_json = parse_json
 
         def run(self):
             while True:
@@ -84,7 +96,10 @@ def boosted_requests(
                 if response.getcode() == 200:
                     data = response.read()
                     encoding = response.info().get_content_charset("utf-8")
-                    self.results[loc] = json.loads(data.decode(encoding))
+                    decoded_data = data.decode(encoding)
+                    self.results[loc] = (
+                        json.loads(decoded_data) if self.parse_json else decoded_data
+                    )
                     self.queue.task_done()
                 else:
                     content["retry"] += 1
@@ -118,7 +133,11 @@ def boosted_requests(
 
     for _ in range(min(url_q.qsize(), no_workers)):
         worker = GetRequestWorker(
-            url_q, max_tries=max_tries, timeout=timeout, verbose=verbose
+            url_q,
+            max_tries=max_tries,
+            timeout=timeout,
+            verbose=verbose,
+            parse_json=parse_json,
         )
         worker.start()
         workers.append(worker)
