@@ -46,7 +46,7 @@ print(results)
 ```python
 from request_boost import boosted_requests
 
-results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=headers, verbose=True)
+results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=headers, verbose=True, parse_json=True)
 print(results)
 ```
 
@@ -63,9 +63,9 @@ headers = [{'sample_header': test_no} for test_no in range(number_of_sample_urls
 data = [{'sample_data': test_no} for test_no in range(number_of_sample_urls)] # Required for POST requests, 
 #For POST request data can be just list of empty dict but not NONE
 
-simple_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False)
-header_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=headers)
-post_results = boosted_requests(urls=post_urls, no_workers=16, max_tries=5, timeout=5, headers=headers, data=data, verbose=True)
+simple_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=None, verbose=False, parse_json=True)
+header_results = boosted_requests(urls=urls, no_workers=16, max_tries=5, timeout=5, headers=headers, parse_json=True)
+post_results = boosted_requests(urls=post_urls, no_workers=16, max_tries=5, timeout=5, headers=headers, data=data, verbose=True, parse_json=True)
 ```
 
 ## Documentation
@@ -77,7 +77,7 @@ post_results = boosted_requests(urls=post_urls, no_workers=16, max_tries=5, time
 </p>
 
 ```
-boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, data=None, verbose=True)
+boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, data=None, verbose=True, parse_json=True)
 
 Get data from APIs in parallel by creating workers that process in the background
     :param urls: list of URLS
@@ -87,6 +87,7 @@ Get data from APIs in parallel by creating workers that process in the backgroun
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :param verbose: Show progress [True or False]
+    :param parse_json: Parse response to json [True or False]
     :return: List of response for each API (order is maintained)
 ```
 
