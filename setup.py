@@ -20,7 +20,7 @@ classifiers = [
 
 setup(
     name="request-boost",
-    version="0.5",
+    version="0.6",
     description="A better requests and urllib. A simple package for hitting multiple URLs and performing GET/POST requests in parallel.",
     long_description=open("README.md").read()
     + "\n\n"
@@ -31,7 +31,7 @@ setup(
     author="Kuldeep Singh Sidhu",
     author_email="singhsidhukuldeep@gmail.com",
     classifiers=classifiers,
-    keywords="request boost urllib",
+    keywords="request boost urllib parallel fast REST API",
     packages=find_packages(),
     install_requires=[],
     zip_safe=False,

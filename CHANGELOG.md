@@ -23,3 +23,8 @@ CHANGE LOG
 ------------------------
 - Added Encoding fix
 - Improved Readability
+
+0.6 (29/12/2021)
+------------------------
+- Added option to not parse the JSON
+- Improved documentation

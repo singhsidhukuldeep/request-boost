@@ -26,13 +26,13 @@ def boosted_requests(
     """
     Get data from APIs in parallel by creating workers that process in the background
     :param urls: list of URLS
-    :param no_workers: maximum number of parallel processes
-    :param max_tries: Maximum number of tries before failing for a specific URL
-    :param timeout: Waiting time per request
+    :param no_workers: maximum number of parallel processes {Default::32}
+    :param max_tries: Maximum number of tries before failing for a specific URL {Default::5}
+    :param timeout: Waiting time per request {Default::10}
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
-    :param verbose: Show progress [True or False]
-    :param parse_json: Parse response to json [True or False]
+    :param verbose: Show progress [True or False] {Default::True}
+    :param parse_json: Parse response to json [True or False] {Default::True}
     :return: List of response for each API (order is maintained)
     """
     start = datetime.now()

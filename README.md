@@ -77,17 +77,26 @@ post_results = boosted_requests(urls=post_urls, no_workers=16, max_tries=5, time
 </p>
 
 ```
-boosted_requests(urls, no_workers=8, max_tries=3, timeout=10, headers=None, data=None, verbose=True, parse_json=True)
+boosted_requests(
+    urls,
+    no_workers=32,
+    max_tries=5,
+    timeout=10,
+    headers=None,
+    data=None,
+    verbose=True,
+    parse_json=True,
+)
 
 Get data from APIs in parallel by creating workers that process in the background
     :param urls: list of URLS
-    :param no_workers: maximum number of parallel processes
-    :param max_tries: Maximum number of tries before failing for a specific URL
-    :param timeout: Waiting time per request
+    :param no_workers: maximum number of parallel processes {Default::32}
+    :param max_tries: Maximum number of tries before failing for a specific URL {Default::5}
+    :param timeout: Waiting time per request {Default::10}
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
-    :param verbose: Show progress [True or False]
-    :param parse_json: Parse response to json [True or False]
+    :param verbose: Show progress [True or False] {Default::True}
+    :param parse_json: Parse response to json [True or False] {Default::True}
     :return: List of response for each API (order is maintained)
 ```
 
@@ -107,6 +116,10 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 `https://www.linkedin.com/in/singhsidhukuldeep/`
 
 ### Contributors
+
+<a href="https://github.com/singhsidhukuldeep/request-boost/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=singhsidhukuldeep/request-boost" />
+</a>
 
  The full list of all the contributors is available [here](https://github.com/singhsidhukuldeep/request-boost/graphs/contributors)
 
