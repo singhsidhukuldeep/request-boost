@@ -130,6 +130,8 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 
 - [ ] Make the backend used (urllib/request library) an option that the user can choose, by default we use urllib
 - [ ] For parallel processing add options for multi-processing along with multi-threading
+- [ ] Set-up tests for edge cases and changes verification
+- [ ] Set-up CI/CD pipleine (possibly using GitHub actions) to publish changes to PyPi
 - [ ] Improeve the doc-strings documentation to add more explanantion and examples
 - [ ] Add a message queue to deploy the service across machines
 
