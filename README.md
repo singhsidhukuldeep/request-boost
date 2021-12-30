@@ -124,7 +124,14 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
  The full list of all the contributors is available [here](https://github.com/singhsidhukuldeep/request-boost/graphs/contributors)
 
 
-[![website](https://forthebadge.com/images/badges/built-with-love.svg)](http://kuldeepsinghsidhu.com)
+[![https://github.com/singhsidhukuldeep](https://forthebadge.com/images/badges/built-with-love.svg)](http://kuldeepsinghsidhu.com)
+
+#### TODO:: Want to contribute?
+
+- [] Make the backend used (urllib/request library) an option that the user can choose, by default we use urllib
+- [] For parallel processing add options for multi-processing along with multi-threading
+- [] Improeve the doc-strings documentation to add more explanantion and examples
+- [] Add a message queue to deploy the service across machines
 
 ## Say Thanks
 
