@@ -128,10 +128,10 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 
 #### TODO:: Want to contribute?
 
-- [] Make the backend used (urllib/request library) an option that the user can choose, by default we use urllib
-- [] For parallel processing add options for multi-processing along with multi-threading
-- [] Improeve the doc-strings documentation to add more explanantion and examples
-- [] Add a message queue to deploy the service across machines
+- [ ] Make the backend used (urllib/request library) an option that the user can choose, by default we use urllib
+- [ ] For parallel processing add options for multi-processing along with multi-threading
+- [ ] Improeve the doc-strings documentation to add more explanantion and examples
+- [ ] Add a message queue to deploy the service across machines
 
 ## Say Thanks
 
