@@ -76,7 +76,7 @@ post_results = boosted_requests(urls=post_urls, no_workers=16, max_tries=5, time
   </a>
 </p>
 
-```
+```python
 boosted_requests(
     urls,
     no_workers=32,
