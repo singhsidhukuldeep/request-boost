@@ -134,6 +134,8 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 - [ ] Set-up CI/CD pipleine (possibly using GitHub actions) to publish changes to PyPi
 - [ ] Improeve the doc-strings documentation to add more explanantion and examples
 - [ ] Add a message queue to deploy the service across machines
+- [ ] Add option to run URL requests with Self signed certificate `verify=False`\
+- [ ] Add option to supress warnings
 
 ## Say Thanks
 
