@@ -136,6 +136,7 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 - [ ] Add a message queue to deploy the service across machines
 - [ ] Add option to run URL requests with Self signed certificate `verify=False`\
 - [ ] Add option to supress warnings
+- [ ] Add progess bars from tqdm and ascii
 
 ## Say Thanks
 
