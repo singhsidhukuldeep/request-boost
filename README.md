@@ -137,6 +137,7 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 - [ ] Add option to run URL requests with Self signed certificate `verify=False`\
 - [ ] Add option to supress warnings
 - [ ] Add progess bars from tqdm and ascii
+- [ ] Add option to add session and auth
 
 ## Say Thanks
 
