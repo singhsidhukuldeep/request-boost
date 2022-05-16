@@ -150,4 +150,4 @@ def boosted_requests(
         ret.update(worker.results)
     if verbose:
         _printer(f">> DONE")
-    return [ret[_] for _ in range(len(urls))]
+    return [ret.get(_) for _ in range(len(urls))]
