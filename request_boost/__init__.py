@@ -22,6 +22,8 @@ def boosted_requests(
     data=None,
     verbose=True,
     parse_json=True,
+    proxy={},
+    cafile=None
 ):
     """
     Get data from APIs in parallel by creating workers that process in the background
@@ -33,6 +35,8 @@ def boosted_requests(
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :param verbose: Show progress [True or False] {Default::True}
     :param parse_json: Parse response to json [True or False] {Default::True}
+    :param proxy: Proxy support [Dict] {Default::{}}
+    :param cafile: CA SSL Location [Str] {Default::None}
     :return: List of response for each API (order is maintained)
     """
     start = datetime.now()
@@ -46,7 +50,8 @@ def boosted_requests(
 
     class GetRequestWorker(Thread):
         def __init__(
-            self, request_queue, max_tries=5, timeout=10, verbose=True, parse_json=True
+            self, request_queue, max_tries=5, timeout=10, verbose=True, parse_json=True,
+            proxy={}, cafile=None
         ):
             """
             Workers that can pull data in the background
@@ -55,6 +60,8 @@ def boosted_requests(
             :param timeout: Waiting time per request
             :param verbose: Show progress [True or False]
             :param parse_json: Parse response to json [True or False]
+            :param proxy: Proxy support [Dict]
+            :param cafile: CA SSL Location [Str]
             """
             Thread.__init__(self)
             self.queue = request_queue
@@ -63,6 +70,8 @@ def boosted_requests(
             self.timeout = timeout
             self.verbose = verbose
             self.parse_json = parse_json
+            self.proxy = proxy
+            self.cafile = cafile
 
         def run(self):
             while True:
@@ -81,6 +90,11 @@ def boosted_requests(
                         num_tries < self.max_tries
                     ), f"Maximum number of attempts reached {self.max_tries} for {content}"
                 try:
+                    if self.proxy:
+                        proxy_support = request.ProxyHandler(self.proxy)
+                        opener = request.build_opener(proxy_support)
+                        request.install_opener(opener)
+
                     if data is not None:
                         data = parse.urlencode(data).encode()
                         _request = request.Request(url, data=data)
@@ -88,9 +102,12 @@ def boosted_requests(
                         _request = request.Request(url)
                     for k, v in header.items():
                         _request.add_header(k, v)
-                    response = request.urlopen(_request, timeout=self.timeout)
+
+                    response = request.urlopen(_request, timeout=self.timeout, cafile=self.cafile)
+
                 except Exception as exp:
                     content["retry"] += 1
+                    print(exp)
                     self.queue.put(content)
                     continue
                 if response.getcode() == 200:
@@ -125,7 +142,7 @@ def boosted_requests(
                 "retry": 0,
                 "header": headers[i],
                 "loc": i,
-                "data": data[i],
+                "data": data[i]
             }
         )
 
@@ -138,6 +155,8 @@ def boosted_requests(
             timeout=timeout,
             verbose=verbose,
             parse_json=parse_json,
+            proxy=proxy,
+            cafile=cafile
         )
         worker.start()
         workers.append(worker)
