@@ -22,8 +22,7 @@ def boosted_requests(
     data=None,
     verbose=True,
     parse_json=True,
-    proxy={},
-    cafile=None
+    **kwargs
 ):
     """
     Get data from APIs in parallel by creating workers that process in the background
@@ -50,8 +49,7 @@ def boosted_requests(
 
     class GetRequestWorker(Thread):
         def __init__(
-            self, request_queue, max_tries=5, timeout=10, verbose=True, parse_json=True,
-            proxy={}, cafile=None
+            self, request_queue, max_tries=5, timeout=10, verbose=True, parse_json=True, **kwargs
         ):
             """
             Workers that can pull data in the background
@@ -70,8 +68,7 @@ def boosted_requests(
             self.timeout = timeout
             self.verbose = verbose
             self.parse_json = parse_json
-            self.proxy = proxy
-            self.cafile = cafile
+            self.kwargs = kwargs
 
         def run(self):
             while True:
@@ -90,8 +87,8 @@ def boosted_requests(
                         num_tries < self.max_tries
                     ), f"Maximum number of attempts reached {self.max_tries} for {content}"
                 try:
-                    if self.proxy:
-                        proxy_support = request.ProxyHandler(self.proxy)
+                    if 'proxy' in self.kwargs:
+                        proxy_support = request.ProxyHandler(self.kwargs['proxy'])
                         opener = request.build_opener(proxy_support)
                         request.install_opener(opener)
 
@@ -103,7 +100,7 @@ def boosted_requests(
                     for k, v in header.items():
                         _request.add_header(k, v)
 
-                    response = request.urlopen(_request, timeout=self.timeout, cafile=self.cafile)
+                    response = request.urlopen(_request, timeout=self.timeout, cafile=self.kwargs.get('cafile', None))
 
                 except Exception as exp:
                     content["retry"] += 1
@@ -155,8 +152,7 @@ def boosted_requests(
             timeout=timeout,
             verbose=verbose,
             parse_json=parse_json,
-            proxy=proxy,
-            cafile=cafile
+            **kwargs
         )
         worker.start()
         workers.append(worker)
