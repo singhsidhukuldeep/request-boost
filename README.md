@@ -96,7 +96,8 @@ Get data from APIs in parallel by creating workers that process in the backgroun
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :param verbose: Show progress [True or False] {Default::True}
-    :param parse_json: Parse response to json [True or False] {Default::True}
+    :param parse_bytes: Parse response to string [True or False] {Default::True}
+    :param parse_json: Parse response to json (ignored if parse_bytes is False) [True or False]{Default::True}
     :return: List of response for each API (order is maintained)
 ```
 

@@ -21,7 +21,8 @@ def boosted_requests(
     headers=None,
     data=None,
     verbose=True,
-    parse_json=True,
+    parse_bytes=True,
+    parse_json=True
 ):
     """
     Get data from APIs in parallel by creating workers that process in the background
@@ -32,7 +33,8 @@ def boosted_requests(
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :param verbose: Show progress [True or False] {Default::True}
-    :param parse_json: Parse response to json [True or False] {Default::True}
+    :param parse_bytes: Parse response to string [True or False] {Default::True}
+    :param parse_json: Parse response to json (ignored if parse_bytes is False) [True or False] {Default::True}
     :return: List of response for each API (order is maintained)
     """
     start = datetime.now()
@@ -95,11 +97,14 @@ def boosted_requests(
                     continue
                 if response.getcode() == 200:
                     data = response.read()
-                    encoding = response.info().get_content_charset("utf-8")
-                    decoded_data = data.decode(encoding)
-                    self.results[loc] = (
-                        json.loads(decoded_data) if self.parse_json else decoded_data
-                    )
+                    if parse_bytes:
+                        encoding = response.info().get_content_charset("utf-8")
+                        decoded_data = data.decode(encoding)
+                        self.results[loc] = (
+                            json.loads(decoded_data) if self.parse_json else decoded_data
+                        )
+                    else:
+                        self.results[loc] = data
                     self.queue.task_done()
                 else:
                     content["retry"] += 1
