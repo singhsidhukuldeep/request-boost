@@ -85,6 +85,7 @@ boosted_requests(
     headers=None,
     data=None,
     verbose=True,
+    parse_bytes=True,
     parse_json=True,
 )
 
