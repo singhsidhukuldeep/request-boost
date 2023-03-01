@@ -13,7 +13,7 @@
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/v/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/status/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <!-- <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/format/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a> -->
-<a href="https://lgtm.com/projects/g/singhsidhukuldeep/request-boost/context:python"><img alt="Language grade: Python" src="https://img.shields.io/lgtm/grade/python/g/singhsidhukuldeep/request-boost.svg?logo=lgtm&logoWidth=18"/></a>
+<!-- <a href="https://lgtm.com/projects/g/singhsidhukuldeep/request-boost/context:python"><img alt="Language grade: Python" src="https://img.shields.io/lgtm/grade/python/g/singhsidhukuldeep/request-boost.svg?logo=lgtm&logoWidth=18"/></a> -->
 <a href="https://pypistats.org/packages/request-boost"><img src="https://img.shields.io/pypi/dm/request-boost"/></a>
 <!-- <img src="https://visitor-badge.glitch.me/badge?page_id=request_boost" alt="Go to https://pypi.org/project/request-boost/"/> -->
 <img src="https://static.pepy.tech/personalized-badge/request-boost?period=total&units=none&left_color=black&right_color=brightgreen&left_text=Total%20Downloads" alt="Go to https://pypi.org/project/request-boost/"/>
@@ -134,7 +134,7 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 - [ ] Set-up CI/CD pipleine (possibly using GitHub actions) to publish changes to PyPi
 - [ ] Improeve the doc-strings documentation to add more explanantion and examples
 - [ ] Add a message queue to deploy the service across machines
-- [ ] Add option to run URL requests with Self signed certificate `verify=False`\
+- [ ] Add option to run URL requests with Self signed certificate `verify=False`
 - [ ] Add option to supress warnings
 - [ ] Add progess bars from tqdm and ascii
 - [ ] Add option to add session and auth

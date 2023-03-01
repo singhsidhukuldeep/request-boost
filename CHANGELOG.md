@@ -1,6 +1,15 @@
 CHANGE LOG
 ==============================
 
+> LATEST
+
+0.7 (29/12/2021)
+------------------------
+- Fixed timeout key error issue, to return `None` for timeouts
+- Improved documentation
+
+> PAST
+
 0.1 (16/09/2021)
 ------------------------
 - Released first version(stable) of request-boost.
@@ -28,3 +37,4 @@ CHANGE LOG
 ------------------------
 - Added option to not parse the JSON
 - Improved documentation
+
