@@ -109,7 +109,7 @@ Get data from APIs in parallel by creating workers that process in the backgroun
 <p align="center">
   <b>You can give me a small 🤓 dopmaine 🤝 support by ⭐STARRING⭐ this project</b>
   
-<img src="https://api.star-history.com/svg?repos=singhsidhukuldeep/request-boost&type=Date" width="50%" alt="🌟⭐✨STAR ME✨⭐🌟">
+<img src="https://api.star-history.com/svg?repos=singhsidhukuldeep/request-boost&type=Date" width="70%" alt="🌟⭐✨STAR ME✨⭐🌟">
 </p>
 
 ## Credits
