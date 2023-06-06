@@ -18,7 +18,8 @@ urls = [
     f"https://postman-echo.com/get?random_data={test_no}"
     for test_no in range(number_of_sample_urls)
 ]
-headers = [{"sample_header": test_no} for test_no in range(number_of_sample_urls)]
+headers = [{"sample_header": test_no}
+           for test_no in range(number_of_sample_urls)]
 
 # Using boosted_requests
 wcd = {}
@@ -42,7 +43,8 @@ fig = px.bar(
     + '<span style="font-size: 10px;"> using <i>postman-echo.com</i> </span>',
     template="plotly_dark",
 )
-fig.update_xaxes(title_text="Number of workers [no_workers] working in parallel")
+fig.update_xaxes(
+    title_text="Number of workers [no_workers] working in parallel")
 
 fig.update_yaxes(title_text="Time Taken [milliseconds]", title_standoff=25)
 fig.show()

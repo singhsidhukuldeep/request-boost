@@ -81,6 +81,7 @@ boosted_requests(
     urls,
     no_workers=32,
     max_tries=5,
+    after_max_tries="assert",
     timeout=10,
     headers=None,
     data=None,
@@ -92,6 +93,8 @@ Get data from APIs in parallel by creating workers that process in the backgroun
     :param urls: list of URLS
     :param no_workers: maximum number of parallel processes {Default::32}
     :param max_tries: Maximum number of tries before failing for a specific URL {Default::5}
+    :param after_max_tries: What to do if not successfull after "max_tries" for a specific URL, 
+                            one of {"assert", "break"} {Default::assert}
     :param timeout: Waiting time per request {Default::10}
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)

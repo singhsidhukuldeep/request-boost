@@ -20,7 +20,7 @@ classifiers = [
 
 setup(
     name="request-boost",
-    version="0.7",
+    version="0.8",
     description="A better requests and urllib. A simple package for hitting multiple URLs and performing GET/POST requests in parallel.",
     long_description=open("README.md").read()
     + "\n\n"

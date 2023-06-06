@@ -17,6 +17,7 @@ def boosted_requests(
     urls,
     no_workers=32,
     max_tries=5,
+    after_max_tries="assert",
     timeout=10,
     headers=None,
     data=None,
@@ -28,6 +29,8 @@ def boosted_requests(
     :param urls: list of URLS
     :param no_workers: maximum number of parallel processes {Default::32}
     :param max_tries: Maximum number of tries before failing for a specific URL {Default::5}
+    :param after_max_tries: What to do if not successfull after "max_tries" for a specific URL, 
+                            one of {"assert", "break"} {Default::assert}
     :param timeout: Waiting time per request {Default::10}
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
@@ -46,12 +49,14 @@ def boosted_requests(
 
     class GetRequestWorker(Thread):
         def __init__(
-            self, request_queue, max_tries=5, timeout=10, verbose=True, parse_json=True
+            self, request_queue, max_tries=5, after_max_tries="assert", timeout=10, verbose=True, parse_json=True
         ):
             """
             Workers that can pull data in the background
             :param request_queue: queue of the dict containing the URLs
             :param max_tries: Maximum number of tries before failing for a specific URL
+            :param after_max_tries: What to do if not successfull after "max_tries" for a specific URL, 
+                                    one of {"assert", "break"} {Default::assert}
             :param timeout: Waiting time per request
             :param verbose: Show progress [True or False]
             :param parse_json: Parse response to json [True or False]
@@ -60,6 +65,12 @@ def boosted_requests(
             self.queue = request_queue
             self.results = {}
             self.max_tries = max_tries
+            assert str(after_max_tries).lower() in {"assert", "break"}, """
+            'after_max_tries' param CANNOT be anything that you want!
+            :param after_max_tries: What to do if not successfull after "max_tries" for a specific URL, 
+                                    one of {"assert", "break"} {Default::assert}
+            """
+            self.after_max_tries = str(after_max_tries).lower()
             self.timeout = timeout
             self.verbose = verbose
             self.parse_json = parse_json
@@ -77,9 +88,13 @@ def boosted_requests(
                     num_tries = content["retry"]
                     data = content["data"]
                     loc = content["loc"]
-                    assert (
-                        num_tries < self.max_tries
-                    ), f"Maximum number of attempts reached {self.max_tries} for {content}"
+                    if num_tries >= self.max_tries:
+                        if self.after_max_tries == "assert":
+                            assert (
+                                num_tries < self.max_tries
+                            ), f"Maximum number of attempts reached {self.max_tries} for {content}"
+                        elif self.after_max_tries == "break":
+                            break
                 try:
                     if data is not None:
                         data = parse.urlencode(data).encode()
@@ -98,7 +113,8 @@ def boosted_requests(
                     encoding = response.info().get_content_charset("utf-8")
                     decoded_data = data.decode(encoding)
                     self.results[loc] = (
-                        json.loads(decoded_data) if self.parse_json else decoded_data
+                        json.loads(
+                            decoded_data) if self.parse_json else decoded_data
                     )
                     self.queue.task_done()
                 else:
@@ -135,6 +151,7 @@ def boosted_requests(
         worker = GetRequestWorker(
             url_q,
             max_tries=max_tries,
+            after_max_tries=after_max_tries,
             timeout=timeout,
             verbose=verbose,
             parse_json=parse_json,

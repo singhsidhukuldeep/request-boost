@@ -3,10 +3,11 @@ CHANGE LOG
 
 > LATEST
 
-0.7 (29/12/2021)
+0.8 (06/06/2023)
 ------------------------
-- Fixed timeout key error issue, to return `None` for timeouts
-- Improved documentation
+- added a new :param `after_max_tries`: What to do if not successfull after `"max_tries"` for a specific URL, 
+                            one of {`"assert"`, `"break"`} {Default::`assert`}
+
 
 > PAST
 
@@ -36,5 +37,10 @@ CHANGE LOG
 0.6 (29/12/2021)
 ------------------------
 - Added option to not parse the JSON
+- Improved documentation
+
+0.7 (29/12/2021)
+------------------------
+- Fixed timeout key error issue, to return `None` for timeouts
 - Improved documentation
 
