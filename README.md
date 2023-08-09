@@ -13,7 +13,7 @@
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/v/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/status/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a>
 <!-- <a href="https://pypi.org/project/request-boost/"><img src="https://img.shields.io/pypi/format/request-boost" alt="Go to https://pypi.org/project/request-boost/"/></a> -->
-<a href="https://lgtm.com/projects/g/singhsidhukuldeep/request-boost/context:python"><img alt="Language grade: Python" src="https://img.shields.io/lgtm/grade/python/g/singhsidhukuldeep/request-boost.svg?logo=lgtm&logoWidth=18"/></a>
+<!-- <a href="https://lgtm.com/projects/g/singhsidhukuldeep/request-boost/context:python"><img alt="Language grade: Python" src="https://img.shields.io/lgtm/grade/python/g/singhsidhukuldeep/request-boost.svg?logo=lgtm&logoWidth=18"/></a> -->
 <a href="https://pypistats.org/packages/request-boost"><img src="https://img.shields.io/pypi/dm/request-boost"/></a>
 <!-- <img src="https://visitor-badge.glitch.me/badge?page_id=request_boost" alt="Go to https://pypi.org/project/request-boost/"/> -->
 <img src="https://static.pepy.tech/personalized-badge/request-boost?period=total&units=none&left_color=black&right_color=brightgreen&left_text=Total%20Downloads" alt="Go to https://pypi.org/project/request-boost/"/>
@@ -81,6 +81,7 @@ boosted_requests(
     urls,
     no_workers=32,
     max_tries=5,
+    after_max_tries="assert",
     timeout=10,
     headers=None,
     data=None,
@@ -93,6 +94,8 @@ Get data from APIs in parallel by creating workers that process in the backgroun
     :param urls: list of URLS
     :param no_workers: maximum number of parallel processes {Default::32}
     :param max_tries: Maximum number of tries before failing for a specific URL {Default::5}
+    :param after_max_tries: What to do if not successfull after "max_tries" for a specific URL, 
+                            one of {"assert", "break"} {Default::assert}
     :param timeout: Waiting time per request {Default::10}
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
@@ -101,6 +104,15 @@ Get data from APIs in parallel by creating workers that process in the backgroun
     :param parse_json: Parse response to json (ignored if parse_bytes is False) [True or False]{Default::True}
     :return: List of response for each API (order is maintained)
 ```
+
+  
+<h2 align="center">🌟⭐✨STAR ME✨⭐🌟</h2>
+
+<p align="center">
+  <b>You can give me a small 🤓 dopmaine 🤝 support by ⭐STARRING⭐ this project</b>
+  
+<img src="https://api.star-history.com/svg?repos=singhsidhukuldeep/request-boost&type=Date" width="70%" alt="🌟⭐✨STAR ME✨⭐🌟">
+</p>
 
 ## Credits
 
@@ -136,7 +148,7 @@ LinkedIn: [Kuldeep Singh Sidhu (LinkedIn)](https://www.linkedin.com/in/singhsidh
 - [ ] Set-up CI/CD pipleine (possibly using GitHub actions) to publish changes to PyPi
 - [ ] Improeve the doc-strings documentation to add more explanantion and examples
 - [ ] Add a message queue to deploy the service across machines
-- [ ] Add option to run URL requests with Self signed certificate `verify=False`\
+- [ ] Add option to run URL requests with Self signed certificate `verify=False`
 - [ ] Add option to supress warnings
 - [ ] Add progess bars from tqdm and ascii
 - [ ] Add option to add session and auth
