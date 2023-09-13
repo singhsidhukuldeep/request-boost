@@ -22,6 +22,7 @@ def boosted_requests(
     headers=None,
     data=None,
     verbose=True,
+    response_process=None,
     parse_json=True,
 ):
     """
@@ -35,9 +36,18 @@ def boosted_requests(
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :param verbose: Show progress [True or False] {Default::True}
-    :param parse_json: Parse response to json [True or False] {Default::True}
+    :param parse_json: Parse response to json (ignored if response_process is not None) [True or False] {Default::True}
+        If parse_json is False, then response bytes are used
+    :param response_process: Callback function to run on request {Default::None}
+        Callback recieves response object as argument, and returns tuple (response_ok, data)
+           where response_ok [True or False] indicates if response was ok (or else retry is required)
+                 data is processed response data
+        If response_process is None, then process according to parse_json
     :return: List of response for each API (order is maintained)
     """
+    if response_process is not None and not callable(response_process):
+        raise ValueError(f'Expected a callable function or None as request_process, got {type(response_process)}')
+
     start = datetime.now()
 
     def _printer(inp, end=""):
@@ -49,7 +59,8 @@ def boosted_requests(
 
     class GetRequestWorker(Thread):
         def __init__(
-            self, request_queue, max_tries=5, after_max_tries="assert", timeout=10, verbose=True, parse_json=True
+            self, request_queue, max_tries=5, after_max_tries="assert", timeout=10, verbose=True, 
+            parse_json=True, response_process=None
         ):
             """
             Workers that can pull data in the background
@@ -60,6 +71,8 @@ def boosted_requests(
             :param timeout: Waiting time per request
             :param verbose: Show progress [True or False]
             :param parse_json: Parse response to json [True or False]
+            :param response_process: Callback function to run on request [function or None]
+                Callback function accepts one argument (response object), returns tuple (response_ok, data)
             """
             Thread.__init__(self)
             self.queue = request_queue
@@ -74,6 +87,7 @@ def boosted_requests(
             self.timeout = timeout
             self.verbose = verbose
             self.parse_json = parse_json
+            self.response_process = response_process
 
         def run(self):
             while True:
@@ -108,14 +122,20 @@ def boosted_requests(
                     content["retry"] += 1
                     self.queue.put(content)
                     continue
-                if response.getcode() == 200:
-                    data = response.read()
-                    encoding = response.info().get_content_charset("utf-8")
-                    decoded_data = data.decode(encoding)
-                    self.results[loc] = (
-                        json.loads(
-                            decoded_data) if self.parse_json else decoded_data
-                    )
+                
+                response_ok = response.getcode() == 200
+                data = response.read()
+                if self.response_process is not None:
+                    response_ok, data = self.response_process(response)
+                if response_ok:
+                    if self.response_process is None:
+                        encoding = response.info().get_content_charset("utf-8")
+                        decoded_data = data.decode(encoding)
+                        self.results[loc] = (
+                            json.loads(decoded_data) if self.parse_json else decoded_data
+                        )
+                    else:
+                        self.results[loc] = data
                     self.queue.task_done()
                 else:
                     content["retry"] += 1
@@ -155,6 +175,7 @@ def boosted_requests(
             timeout=timeout,
             verbose=verbose,
             parse_json=parse_json,
+            response_process=response_process
         )
         worker.start()
         workers.append(worker)

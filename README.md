@@ -87,6 +87,7 @@ boosted_requests(
     data=None,
     verbose=True,
     parse_json=True,
+    response_process=None
 )
 
 Get data from APIs in parallel by creating workers that process in the background
@@ -99,7 +100,13 @@ Get data from APIs in parallel by creating workers that process in the backgroun
     :param headers: Headers if any for the URL requests
     :param data: data if any for the URL requests (Wherever not None a POST request is made)
     :param verbose: Show progress [True or False] {Default::True}
-    :param parse_json: Parse response to json [True or False] {Default::True}
+    :param parse_json: Parse response to json (ignored if response_process is not None) [True or False] {Default::True}
+        If parse_json is False, then response bytes are used
+    :param response_process: Callback function to run on request {Default::None}
+        Callback recieves response object as argument, and returns tuple (response_ok, data)
+           where response_ok [True or False] indicates if response was ok (or else retry is required)
+                 data is processed response data
+        If response_process is None, then process according to parse_json
     :return: List of response for each API (order is maintained)
 ```
 
